@@ -1,6 +1,6 @@
 {
   "name": "sh1rga",
-  "version": "0.3.6",
+  "version": "0.3.7",
   "description": "Sh1rga chat app",
   "main": "server.js",
   "dependencies": {

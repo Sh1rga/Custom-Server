@@ -19,7 +19,7 @@ What is Flag in the code?
 - This feature was added temporarily to pass the App Store review process, but this feature does not work properly and there are no plans to update it in the future.
 
 I found a bug. Where do I report it?
-- Please send details of the version and bug and how to reproduce it to "sh1rga@tsg0o0.com".
+- Please send details of the version and bug and how to reproduce it to "support@tsg0o0.com".
 
 I found a comment in Japanese in the code.
 - Yes, I am Japanese! ｺﾝﾆﾁﾊ-(^o^)ﾉｼ
