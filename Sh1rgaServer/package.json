@@ -1,6 +1,6 @@
 {
   "name": "sh1rga",
-  "version": "0.3.7",
+  "version": "0.3.8",
   "description": "Sh1rga chat app",
   "main": "server.js",
   "dependencies": {
@@ -8,12 +8,12 @@
     "date-utils": "^1.2.21",
     "ejs": "^3.1.8",
     "express": "^4.18.2",
-    "fs-extra": "^10.1.0",
+    "fs-extra": "^11.1.0",
     "http": "^0.0.1-security",
     "http-status-codes": "^2.2.0",
     "node-cron": "^3.0.2",
-    "npm-check-updates": "^16.3.16",
-    "socket.io": "^4.5.3",
+    "npm-check-updates": "^16.7.4",
+    "socket.io": "^4.6.0",
     "uuid": "^9.0.0"
   },
   "scripts": {
