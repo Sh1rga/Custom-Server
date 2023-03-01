@@ -464,6 +464,7 @@ server.listen(PORT,() => {
     newCrypt();
     console.log( 'Server on port %d', PORT );
     console.log( ' Version: ' + version );
+    console.log( ' This software is licensed under the terms of the GNU GPL v2.0.' );
     const status = {
         online: true,
         ver: version
