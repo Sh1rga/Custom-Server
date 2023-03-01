@@ -30,7 +30,7 @@ var strLen = str.length;
 var server_encrypt = "";
 var server_decrypt = "";
 
-var enc_bits = 2048;
+var enc_bits = 3072;
 var enc_len = 16;
 var enc_str = "abcdefghijklmnopqrstuvwxyz0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 var enc_strLen = enc_str.length;
