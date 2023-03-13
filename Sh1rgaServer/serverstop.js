@@ -31,4 +31,5 @@ app.use( function( req, res, next ){
 server.listen(PORT,() => {
     console.log( 'Server on port %d', PORT );
     console.log( '---Stop---' );
+    console.log( ' This software is licensed under the terms of the Mozilla Public License 2.0.' );
 } );
