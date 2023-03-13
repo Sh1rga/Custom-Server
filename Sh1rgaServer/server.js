@@ -31,10 +31,7 @@ var server_encrypt = "";
 var server_decrypt = "";
 
 var enc_bits = 3072;
-var enc_len = 16;
-var enc_str = "abcdefghijklmnopqrstuvwxyz0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-var enc_strLen = enc_str.length;
-var enc_result = "";
+var enc_seed = new Uint32Array(1);
 
 io.on(
     'connection',
@@ -136,7 +133,6 @@ io.on(
                 var crypt = strMessage.substr( 12 );
                 
                 //Read room json
-                //コード圧縮のためと面倒くささに負けて、エラー処理が雑ですが、たぶん大丈夫だと思います。。。たぶんね。。
                 try {
                     var rjson = JSON.parse(fs.readFileSync(dataRoom + rtime + '/' + roomID + '.json', 'utf8'));
                     findroom = true;
@@ -217,7 +213,6 @@ io.on(
                     var flag = false;
                     
                     //Get json file
-                    //ここも処理が雑だけどゆるしておくれ( ；∀；)
                     try {
                     ujson = JSON.parse(fs.readFileSync(dataUser + utime + '/' + strMessage + '.json', 'utf8'));
                     roomID = ujson.id;
@@ -375,7 +370,6 @@ io.on(
     } );
     
 //Delete files in 12-hour cycles
-//もっと他にもいい方法あると思うけど、眠かったからこれで許して。
 cron.schedule('0 0 0 * * *',  () => { time = "12"; deleteData(); newCrypt(); });
 cron.schedule('0 0 1 * * *',  () => { time = "13"; deleteData(); });
 cron.schedule('0 0 2 * * *',  () => { time = "14"; deleteData(); });
@@ -409,13 +403,13 @@ io.sockets.emit("version", version )
 
 function newCrypt() {
 try {
-for (var i = 0; i < enc_len; i++) {
-	enc_result += enc_str[Math.floor(Math.random() * enc_strLen)];
-}
+console.log( 'Generating server private key. (It may take some time)' );
+enc_seed = new Uint32Array(1);
+crypto.getRandomValues(enc_seed);
 
 var cryptjson = JSON.parse(fs.readFileSync('./database/server.json', 'utf8'));
 
-var private_key = cryptico.generateRSAKey(enc_result, enc_bits);
+var private_key = cryptico.generateRSAKey(String(enc_seed[0]), enc_bits);
 var public_key = cryptico.publicKeyString(private_key);
 server_decrypt = private_key;
 server_encrypt = public_key;
@@ -426,7 +420,7 @@ cryptjson.public = server_encrypt
 const newJson = JSON.stringify(cryptjson)
 fs.writeFileSync('./database/server.json', newJson)
 io.sockets.emit("cryptload", public_key)
-console.log( 'NewCrypt: ' + public_key );
+console.log( 'Server Public Key: ' + public_key );
 } catch { newCrypt(); }
 }
 
@@ -457,6 +451,7 @@ app.use( express.static( __dirname + '/public' ) );
 app.use( function( req, res, next ){
   res.status( 404 );
   res.render( '404', { path: req.path } );
+  res.header('Access-Control-Allow-Origin', '*');
 });
 
 server.listen(PORT,() => {
